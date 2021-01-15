@@ -1,0 +1,2 @@
+-i https://mirrors.aliyun.com/pypi/simple
+selenium==3.141.0
