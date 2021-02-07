@@ -41,7 +41,7 @@ class testzh(Driver):
         win32gui.SendMessage(dialog, win32con.WM_COMMAND, 1, button)  # 点击打开按钮
 
     def Login(self,username,password):#首页登录
-        time.sleep(2)
+        time.sleep(4)
         xf = self.driver.find_element_by_xpath('//*[@id="loginIframe"]')
         self.driver.switch_to_frame(xf)
         self.driver.find_element_by_id('LAY-user-login-username').send_keys(username)  # 输入账号
@@ -50,21 +50,23 @@ class testzh(Driver):
         self.driver.find_element_by_xpath('//*[@id="LoginPage"]/div/div/div[2]/div/div[1]/div[4]/button').click()  # 点击登录
 
     def create_project(self,num):#创建项目
-        time.sleep(3)
-        self.driver.find_element_by_xpath('//*[@id="LeftMenus"]/ul/li[1]/a/cite').click()   # 点击项目管理
+        time.sleep(2)
+        self.driver.find_element_by_xpath('//*[@id="LeftMenus"]/ul/li[1]/a/cite').click()  # 点击项目管理
         self.driver.find_element_by_xpath('//*[@id="LeftMenus"]/ul/li[1]/dl/dd[1]/a').click()  # 点击项目
-        time.sleep(3)
+        time.sleep(2)
         self.driver.switch_to.frame(1)
-        time.sleep(3)
+        time.sleep(2)
         self.driver.find_elements_by_xpath("//button[text()='新增']")[-1].click()    # 点击新增按钮
         self.driver.switch_to.default_content()
-        time.sleep(3)
-        xf = self.driver.find_element_by_xpath('//*[@id="layui-layer-iframe1"]')
-        self.driver.switch_to_frame(xf)  # str(random.randint(1,5))
-        time.sleep(6)
+        time.sleep(2)
+        frame=self.driver.find_element_by_xpath('/html/body/div[3]/div[2]/iframe')
+
+        # print(self.driver.find_element_by_xpath('/html/body/div[3]/div[2]/iframe').get_attribute('id'))
+        # xf = self.driver.find_element_by_xpath('//*[@id="layui-layer-iframe1"]')
+        self.driver.switch_to_frame(frame)
         # 选择采购方式
         self.driver.find_element_by_xpath(f"/html/body/div/form/div[1]/div[2]/div/div[1]/div/div[{str(num)}]/i").click()
-        # 采购单位
+        # # 采购单位
         ele6 = self.driver.find_element_by_xpath('/html/body/div/form/div[1]/div[2]/div/div[2]/div[1]/div/div/div/input')
         ActionChains(self.driver).move_to_element(ele6).perform()
         self.driver.find_element_by_xpath('/html/body/div/form/div[1]/div[2]/div/div[2]/div[1]/div/div/div/input').click()
@@ -78,7 +80,8 @@ class testzh(Driver):
         # 项目所属地区
         self.driver.find_element_by_xpath('//*[@id="regionName"]').click()
 
-        xf = self.driver.find_element_by_xpath('//*[@id="layui-layer-iframe1"]')
+        time.sleep(2)
+        xf = self.driver.find_element_by_xpath("//*[@id='layui-layer-iframe1']")
         self.driver.switch_to_frame(xf)
         self.driver.find_element_by_xpath('//*[@id="address"]').send_keys('成都市',Keys.ENTER)
         time.sleep(2)
@@ -86,14 +89,14 @@ class testzh(Driver):
         self.driver.switch_to.parent_frame()
         self.driver.find_element_by_xpath('//*[@id="layui-layer1"]/div[3]/a[1]').click()
         # 项目名称
-        self.driver.find_element_by_xpath('/html/body/div/form/div[1]/div[2]/div/div[6]/div/input').send_keys('成都测试'+time.strftime('%d%m%Y')+str(num))
+        self.driver.find_element_by_xpath('/html/body/div/form/div[1]/div[2]/div/div[6]/div/input').send_keys('成都测试'+time.strftime('%d%m%Y')+str(random.randint(1,100000)))
         # 项目分类
         ele7 = self.driver.find_element_by_xpath('/html/body/div[1]/form/div[1]/div[2]/div/div[7]/div/div/div/div/input')
         ActionChains(self.driver).move_to_element(ele7).perform()
         self.driver.find_element_by_xpath('/html/body/div[1]/form/div[1]/div[2]/div/div[7]/div/div/div/div/input').click()
         self.driver.find_element_by_xpath(f'/html/body/div/form/div[1]/div[2]/div/div[7]/div/div/div/dl/dd[{str(random.randint(2,5))}]').click()
         # 项目概况
-        self.driver.find_element_by_xpath('/html/body/div/form/div[1]/div[2]/div/div[8]/div/textarea').send_keys('成都测试' + time.strftime('%d%m%Y'))
+        self.driver.find_element_by_xpath('/html/body/div/form/div[1]/div[2]/div/div[8]/div/textarea').send_keys('成都测试' + time.strftime('%d%m%Y')+str(random.randint(1,100000)))
         # 资金来源及落实情况
         self.driver.find_element_by_xpath('/html/body/div/form/div[1]/div[2]/div/div[9]/div/textarea').send_keys('成都测试' + time.strftime('%d%m%Y'))
         # 点击保存按钮
@@ -101,13 +104,10 @@ class testzh(Driver):
         self.driver.find_element_by_xpath('//*[@id="layui-layer1"]/div[3]/a[1]').click()
         # 点击确定按钮
         time.sleep(10)
-        print(self.driver.find_element_by_xpath('//*[@id="layui-layer4"]/div[2]').text)
+        print(self.driver.find_element_by_xpath('//*[@id="layui-layer4"]/div[3]/a').text)
         self.driver.find_element_by_xpath('//*[@id="layui-layer4"]/div[3]/a').click()
 
     def common_project(self):
-        time.sleep(3)
-        self.driver.find_element_by_xpath('//*[@id="LeftMenus"]/ul/li[1]/a/cite').click()  # 点击项目管理
-        self.driver.find_element_by_xpath('//*[@id="LeftMenus"]/ul/li[1]/dl/dd[1]/a').click()  # 点击项目
         time.sleep(3)
         self.driver.switch_to.frame(1)
         time.sleep(3)
@@ -124,7 +124,7 @@ class testzh(Driver):
 
         self.driver.switch_to.default_content()
         time.sleep(3)
-        xf = self.driver.find_element_by_xpath('//*[@id="layui-layer-iframe1"]')
+        xf = self.driver.find_element_by_xpath('//*[@id="layui-layer-iframe5"]')
         self.driver.switch_to_frame(xf)
         # 标段(包)名称
         self.driver.find_element_by_xpath('/html/body/div/div/div[2]/form/div[1]/div/div/input[1]').send_keys('一期标段')
@@ -154,10 +154,13 @@ class testzh(Driver):
         self.driver.find_element_by_xpath('/html/body/div/div/div[2]/form/div[8]/div/textarea').send_keys("一期标段")
         # 点击保存按钮
         self.driver.switch_to.default_content()
-        self.driver.find_element_by_xpath('//*[@id="layui-layer1"]/div[3]/a[1]').click()
+        self.driver.find_element_by_xpath('//*[@id="layui-layer5"]/div[3]/a[1]').click()
         # 点击确定按钮
-        print(self.driver.find_element_by_xpath('//*[@id="layui-layer2"]/div[2]').text)
-        self.driver.find_element_by_xpath('//*[@id="layui-layer2"]/div[3]/a').click()
+        time.sleep(3)
+        # ele=self.driver.find_element_by_xpath('//*[@id="layui-layer6"]')
+        print(self.driver.find_element_by_xpath('/html/body/div[6]/div[3]/a').text)
+        self.driver.find_element_by_xpath('/html/body/div[6]/div[3]/a').click()
+        self.driver.switch_to.default_content()
 
     def increace_file(self):
         time.sleep(3)
@@ -194,31 +197,82 @@ class testzh(Driver):
         time.sleep(2)
         xf4 = self.driver.find_element_by_xpath('//*[@id="layui-layer-iframe4"]')
         self.driver.switch_to_frame(xf4)
-        # file_path=r'C:\Users\hp\Desktop\pdf测试数据\投标文件测试数据\不分标段(招标文件).pdf'
+        fileBox = self.driver.find_element_by_xpath('//*[@id="uploadBiddingFile"]/i')
+        file_path=r'C:\Users\hp\Desktop\pdf测试数据\投标文件测试数据\不分标段(招标文件).pdf'
+        fileBox.click()
+        fileBox.send_keys(file_path)
+
         # self.driver.find_element_by_xpath('//*[@id="uploadBiddingFile"]/i').click()
         # self.upload(file_path)
-        self.driver.find_element_by_xpath('//*[@id="info"]').click()
-        xf5 = self.driver.find_element_by_xpath('//*[@id="infoContent"]')
-        self.driver.switch_to_frame(xf5)
-        ele2 = self.driver.find_element_by_xpath('//*[@id="info-basic"]/div[5]/div/div/div/input')
-        ActionChains(self.driver).move_to_element(ele2).perform()
-        self.driver.find_element_by_xpath('//*[@id="info-basic"]/div[5]/div/div/div/input').click()
-        self.driver.find_element_by_xpath('//*[@id="info-basic"]/div[5]/div/div/dl/dd[2]').click()
-
-        self.driver.find_element_by_xpath('//*[@id="info-basic"]/div[10]/button').click()
-
-        time.sleep(3)
-        self.driver.switch_to.parent_frame()
-        self.driver.find_element_by_xpath('//*[@id="showReviewItems"]').click()
-        time.sleep(2)
+        # self.driver.find_element_by_xpath('//*[@id="info"]').click()
+        # xf5 = self.driver.find_element_by_xpath('//*[@id="infoContent"]')
+        # self.driver.switch_to_frame(xf5)
+        # ele2 = self.driver.find_element_by_xpath('//*[@id="info-basic"]/div[5]/div/div/div/input')
+        # ActionChains(self.driver).move_to_element(ele2).perform()
+        # self.driver.find_element_by_xpath('//*[@id="info-basic"]/div[5]/div/div/div/input').click()
+        # self.driver.find_element_by_xpath('//*[@id="info-basic"]/div[5]/div/div/dl/dd[2]').click()
+        #
+        # self.driver.find_element_by_xpath('//*[@id="info-basic"]/div[10]/button').click()
+        #
+        # time.sleep(3)
+        # self.driver.switch_to.parent_frame()
+        # self.driver.find_element_by_xpath('//*[@id="showReviewItems"]').click()
+        # time.sleep(2)
         # self.driver.find_element_by_xpath('//*[@id="singleLetterItemsMenu"]/li[2]').click()
         # self.driver.find_element_by_xpath('//*[@id="tree_1612540855024_2_span"]').click()
-        self.driver.find_element_by_xpath('//*[@id="showSummarySheetForBidOpening"]/a').click()
+        # self.driver.find_element_by_xpath('//*[@id="showSummarySheetForBidOpening"]/a').click()
+        # time.sleep(2)
+        # self.driver.find_element_by_xpath('//*[@id="showCatalogForTenderFile"]/a').click()
+        # self.driver.find_element_by_xpath('//*[@id="menuTree-light"]/div/div[1]/div/button[1]').click()
+
+    def export(self,num):
+        time.sleep(3)
+        xf1 = self.driver.find_element_by_xpath('//*[@id="LAY_app_body"]/div[3]/iframe')
+        self.driver.switch_to.frame(xf1)
         time.sleep(2)
-        self.driver.find_element_by_xpath('//*[@id="showCatalogForTenderFile"]/a').click()
-        self.driver.find_element_by_xpath('//*[@id="menuTree-light"]/div/div[1]/div/button[1]').click()
-
-
+        self.driver.find_element_by_xpath("//*[@id='panelMenus']/li[5]").click()
+        xf2 = self.driver.find_element_by_xpath('//*[@id="panelMenuBodys"]/div[5]/iframe')
+        self.driver.switch_to.frame(xf2)
+        time.sleep(3)
+        self.driver.find_element_by_xpath('/html/body/div[1]/div[1]/div[1]/span/button[1]').click()
+        self.driver.switch_to.default_content()
+        time.sleep(3)
+        xf = self.driver.find_element_by_xpath('//*[@id="layui-layer-iframe7"]')
+        self.driver.switch_to_frame(xf)
+        time.sleep(5)
+        # 项目名称
+        # self.driver.find_element_by_xpath('//*[@id="legalUpdate"]/div[1]/div/input').click()
+        # self.driver.find_element_by_xpath('//*[@id="legalUpdate"]/div[1]/div/input').clear()
+        # self.driver.find_element_by_xpath('//*[@id="legalUpdate"]/div[1]/div/input').send_keys('项目专家')
+        # 标段
+        self.driver.find_element_by_xpath(f'//*[@id="legalUpdate"]/div[2]/div/div[{str(num)}]').click()
+        # 评标时间
+        ele5 = self.driver.find_element_by_xpath('//*[@id="legalUpdate"]/div[3]/div/input')
+        ActionChains(self.driver).move_to_element(ele5).click(ele5).perform()
+        self.driver.find_element_by_xpath('//*[@id="legalUpdate"]/div[3]/div/input').click()
+        self.driver.find_element_by_xpath('//*[@id="layui-laydate1"]/div[2]/div/span[2]').click()
+        # 评标地点
+        self.driver.find_element_by_xpath('//*[@id="legalUpdate"]/div[4]/div/input').send_keys('成都')
+        # 代理机构审核
+        self.driver.find_element_by_xpath('//*[@id="redioFlow"]/div[1]/div/div[2]/i').click()
+        self.driver.find_element_by_xpath('//*[@id="redioFlow"]/div[2]/div/div[2]/i').click()
+        # 选择专家
+        self.driver.find_element_by_xpath('//*[@id="selectdl"]').click()
+        time.sleep(2)
+        self.driver.switch_to.default_content()
+        xf3 = self.driver.find_element_by_xpath('//*[@id="layui-layer-iframe8"]')
+        self.driver.switch_to_frame(xf3)
+        time.sleep(2)
+        self.driver.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div[1]/div[2]/table/tbody/tr[1]/td[1]/div/div/i').click()
+        self.driver.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div[1]/div[2]/table/tbody/tr[4]/td[1]/div/div/i').click()
+        self.driver.find_element_by_xpath('/html/body/div[1]/div/div/div[2]/div[1]/div[2]/table/tbody/tr[10]/td[1]/div/div/i').click()
+        self.driver.switch_to.default_content()
+        self.driver.find_element_by_xpath('//*[@id="layui-layer8"]/div[3]/a[1]').click()
+        time.sleep(3)
+        self.driver.find_element_by_xpath('//*[@id="layui-layer7"]/div[3]/a[1]').click()
+        self.driver.switch_to_frame(xf)
+        self.driver.find_element_by_xpath('//*[@id="layui-layer3"]/div[3]/a[1]').click()
+        self.driver.switch_to.default_content()
 
     def logout(self):
         time.sleep(3)
@@ -237,10 +291,15 @@ class testzh(Driver):
 
 #https://caigou.jcebid.com/test/src/views/sys/user/login.html   http://ysdfzb.jcebid.com/nobid_ui/views/sys/user/login.html
 test=testzh()
-test.open('https://caigou.jcebid.com/test/src/views/sys/user/login.html')
+test.open('http://ysdfzb.jcebid.com/nobid_ui/views/sys/user/login.html')
+for i in range(3,5):
+    test.Login('cszbdl','123456')
+    test.create_project(i)
+    test.common_project()
+    # test.export(i)
+    test.logout()
 # for i in range(1,5):
-test.Login('cszbdl','123456')
-test.increace_file()
-# test.create_project(4)
+#     test.create_project(i)
+# test.common_project()
 # test.logout()
 
