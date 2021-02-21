@@ -10,18 +10,18 @@ class Oalogin(Driver):
     def Login(self,name,password):#oa首页登录
         self.driver.find_element_by_name('loginName').send_keys(name) #输入用户名
         self.driver.find_element_by_name('password').send_keys(password) #输入密码
-        time.sleep(2)
-        self.driver.save_screenshot("scr_img.png")
-        time.sleep(2)
-        code_ele = self.driver.find_element_by_id("LAY-user-get-vercode")
-        time.sleep(2)
-        x0 = code_ele.location["x"]
-        y0 = code_ele.location["y"]
-        x1 = code_ele.size["width"] + x0
-        y1 = code_ele.size["height"] + y0
-        img = Image.open("scr_img.png")
-        image = img.crop((x0, y0, x1, y1))  # 左、上、右、下
-        image.save("code_img.png")  # 将验证码图片保存为code_img.png
+        time.sleep(6)
+        # self.driver.save_screenshot("scr_img.png")
+        # time.sleep(2)
+        # code_ele = self.driver.find_element_by_id("LAY-user-get-vercode")
+        # time.sleep(2)
+        # x0 = code_ele.location["x"]
+        # y0 = code_ele.location["y"]
+        # x1 = code_ele.size["width"] + x0
+        # y1 = code_ele.size["height"] + y0
+        # img = Image.open("scr_img.png")
+        # image = img.crop((x0, y0, x1, y1))  # 左、上、右、下
+        # image.save("code_img.png")  # 将验证码图片保存为code_img.png
         # qq = Image.open('code_img.png')
         # text = pytesseract.image_to_string(qq).strip()  # 使用image_to_string识别验证码
         # print(text)
@@ -34,20 +34,15 @@ class Oalogin(Driver):
         #     list1 = list[1].split('=')
         #     a = int(list[0]) - int(list1[0])
         # self.driver.find_element_by_name('vercode').send_keys(a)
-        # time.sleep(1)
-        # self.driver.find_element_by_id('LAY-user-login-submit').click() #点击登录
-        # time.sleep(1)
+        time.sleep(1)
+        self.driver.find_element_by_id('LAY-user-login-submit').click() #点击登录
+        time.sleep(1)
 
     def logout(self):
-
+        time.sleep(5)
         exit_1 = self.driver.find_element_by_xpath('//*[@id="userProfile"]/a/span')
         ActionChains(self.driver).move_to_element(exit_1).perform()
         self.driver.find_element_by_xpath('//*[@id="logout"]/a').click()
-        # exit_1 = self.driver.find_element_by_xpath('//*[@id="userProfile"]/a/span')
-        # time.sleep(5)
-        # ActionChains(self.driver).move_to_element(exit_1).perform()
-        # time.sleep(5)
-        # self.driver.find_element_by_xpath('//*[@id="logout"]').click()
 
     def increase_Project(self,num):
         # self.driver.find_element_by_xpath('//*[@id="LAY-system-side-menu"]/li[7]/a/cite').click()
@@ -111,10 +106,10 @@ class Oalogin(Driver):
         self.driver.switch_to.default_content()
 
     def Generate_project_filing(self):
-        time.sleep(1)
+        time.sleep(3)
         xf = self.driver.find_element_by_xpath('//*[@id="LAY_app_body"]/div[2]/iframe')
         self.driver.switch_to_frame(xf)
-        self.driver.find_element_by_xpath('/html/body/div/div/div/div/div[2]/div[2]/table/tbody/tr[1]/td[17]/div/a[2]').click()
+        self.driver.find_element_by_xpath('/html/body/div/div/div/div/div[2]/div[2]/table/tbody/tr[1]/td[18]/div/a[2]').click()
         ele6 = self.driver.find_element_by_xpath('// *[ @ class = "layui-layer layui-layer-dialog"]')
         ActionChains(self.driver).move_to_element(ele6).perform()
         self.driver.find_element_by_xpath('//*[@ class = "layui-layer layui-layer-dialog"]/div[3]/a[1]').click()
@@ -128,7 +123,8 @@ class Oalogin(Driver):
 
         xf = self.driver.find_element_by_xpath('//*[@id="LAY_app_body"]/div[2]/iframe')
         self.driver.switch_to_frame(xf)
-        self.driver.find_element_by_xpath('/html/body/div/div/div/div/div[2]/div[2]/table/tbody/tr/td[17]/div/a[2]').click()
+        time.sleep(2)
+        self.driver.find_element_by_xpath('/html/body/div/div/div/div/div[2]/div[2]/table/tbody/tr[1]/td[18]/div/a[2]').click()
 
         time.sleep(1)
 
@@ -244,3 +240,7 @@ class Oalogin(Driver):
 O=Oalogin()
 O.open()
 O.Login('apisxy',123456)
+O.increase_Project(1)
+O.Generate_project_filing()
+O.project_filing(1)
+O.logout()

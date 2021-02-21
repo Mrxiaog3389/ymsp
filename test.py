@@ -114,5 +114,5 @@ class TestDemo(unittest.TestCase):
         # 退出IE浏览器
         self.driver.quit()
 
-if __name__ == '__main__':
-    unittest.main()
+# if __name__ == '__main__':
+#     unittest.main()

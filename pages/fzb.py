@@ -6,6 +6,7 @@ import win32gui
 import win32con
 
 class testzh(Driver):
+
     def open(self,url):
         self.driver.get(url)
 
@@ -41,7 +42,7 @@ class testzh(Driver):
         win32gui.SendMessage(dialog, win32con.WM_COMMAND, 1, button)  # 点击打开按钮
 
     def Login(self,username,password):#首页登录
-        time.sleep(4)
+        time.sleep(20)
         xf = self.driver.find_element_by_xpath('//*[@id="loginIframe"]')
         self.driver.switch_to_frame(xf)
         self.driver.find_element_by_id('LAY-user-login-username').send_keys(username)  # 输入账号
@@ -292,9 +293,9 @@ class testzh(Driver):
 #https://caigou.jcebid.com/test/src/views/sys/user/login.html   http://ysdfzb.jcebid.com/nobid_ui/views/sys/user/login.html
 test=testzh()
 test.open('http://ysdfzb.jcebid.com/nobid_ui/views/sys/user/login.html')
-for i in range(3,5):
+for i in range(1,2):
     test.Login('cszbdl','123456')
-    test.create_project(i)
+    # test.create_project(i)
     test.common_project()
     # test.export(i)
     test.logout()

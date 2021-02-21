@@ -111,8 +111,6 @@ class testzh(Driver):
         self.driver.find_element_by_xpath('/html/body/div/div/div[2]/form/div[1]/div[1]/div/div/div/input').click()
         self.driver.find_element_by_xpath('/html/body/div/div/div[2]/form/div[1]/div[1]/div/div/dl/dd[2]').click()
 
-
-
     def logout(self):
 
         exit_1 = self.driver.find_element_by_xpath('//*[@id="LAY_app"]/div/div[1]/ul[2]/li[7]/a/span')
